@@ -1,100 +1,107 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react'
 
 function App() {
 
-return <Todos/>;
+  return <LoginPage/>;
 
 }
 
-function Todos(){
+function LoginPage(){
+  const [pleaseLogin, setPleaselogin] = useState('');
+  
 
-    const[todolist, setTodoList] = useState('');
-    const onAddTodo = (todo) => {
-        console.log('Parent todo', todo)
-        setTodoList((prev)=>[...prev, todo])
+  const setMessage = () => { 
+    setPleaselogin((_) => 'Please loginnnnnnn')
+}
 
+  return (
+
+    <div className='container'>
+
+    <LoginTitle please = {pleaseLogin}/>
+    <AddUsernamePassword/>
+
+
+    </div>
+
+  )
+}
+
+ 
+
+
+function LoginTitle({please}){
+  
+
+  return(
+    <>
+    <h2>Login-Page</h2>
+    <h3>{please}</h3>
+    </>
+  )
+  }
+
+
+
+function AddUsernamePassword(){
+
+  const[username, setUsername] = useState('');
+  const[password, setPassword] = useState('');
+
+  const handleUserChange = (event)=>{
+    // console.log(event)
+    const usernameValue = event.target.value
+    setUsername((_) => usernameValue)
+  }
+
+  const handlePasswordChange = (event)=>{
+    // console.log(event)
+    const usernameValue = event.target.value
+    setPassword((_) => usernameValue)
+  }
+
+  const handleSubmitButton = () => {
+    if(username && password){
+      if(username === 'admin' && password === 'admin'){
+        alert('Successful Login')
+      }
+      else{
+        alert('Failed Login')
+      }
     }
-
-   
-return(
-
-        <div className='todo-card'>
-
-        <TodoTitle/>
-        
-        <AddTodo onAddTodo = {onAddTodo}/>
-        
-        <TodoList todos = {todolist}/>
     
-
-        <TodoFooter/>
-
-        </div>    
-);
-
-}
+  }
 
 
-function TodoTitle(){
-    return(
-        <div className='title'>
-        <h1>To-Do-List</h1>
-        </div>
-    )
-}
 
-function AddTodo({onAddTodo}){
+  //  useEffect(() => {
+  //   LoginPage.setMessage();
+  
 
-    const[todo, setTodo] = useState('');
-    const handleTodo =(event)=>{
-        const todoValue = event.target.value;
+  // }, [])
 
-    setTodo((_) => todoValue)
-    }
+  
 
-    const handleTodoAdd = () =>{
-        onAddTodo(todo)
-        setTodo((prev)=>'')
-    }
+  return(
+    <>
+    <div className='user'>
+
+      <input type='text' onChange={handleUserChange} placeholder='Username'></input>
+    </div>
+  
+    <div className='password'>
+      <input type='password' onChange={handlePasswordChange} placeholder='Password'></input>
+    </div>
     
-    
-    return(
-        <div className='input'>
-            <input type='text' placeholder='What will you do next?' onChange={handleTodo} value={todo}></input>
-            <button onClick = {handleTodoAdd}>+</button>
-        </div>
-    )
-}
+    <div>
+      <button type='submit' onClick={handleSubmitButton}>Login</button>
+    </div>
 
-function TodoList({todos}){
-    return(
-        <div className='todo-list' id='one'>
-            {
-            todos.map((todo, index) => (
-                <div key={index}>{todo}</div>
-             )) 
-            }
-        </div>
-    );
-}
+    </>
 
-function TodoFooter(){
-
-
-
-    return(
-        <div className='footer'>
-            <div className='pending-task' id='one'>
-                You have 3 pending task.
-            </div>
-            <div>
-                <button className='btn'>Clear all</button>
-            </div>
-
-        </div>
-    )
+  )
 }
 
 
